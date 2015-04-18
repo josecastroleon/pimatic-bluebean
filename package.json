@@ -1,0 +1,26 @@
+{
+  "name": "pimatic-bluebean",
+  "description": "Gets Information from Bluebean as devices",
+  "author": "Jose Castro Leon <josecastroleon@gmail.com>",
+  "main": "bluebean",
+  "files": [
+    "bluebean.coffee",
+    "README.md",
+    "bluebean-config-schema.coffee"
+  ],
+  "version": "0.8.0",
+  "homepage": "https://github.com/josecastroleon/pimatic-bluebean",
+  "configSchema": "bluebean-config-schema.coffee",
+  "dependencies": {
+    "ble-bean": "^2.1.0",
+    "ieee754": "^1.1.4"
+  },
+  "peerDependencies": {
+    "pimatic": "0.8.*",
+    "pimatic-ble": "0.8.*"
+  },
+  "engines": {
+    "node": ">0.8.x",
+    "npm": ">1.1.x"
+  }
+}
