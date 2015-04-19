@@ -7,7 +7,7 @@ module.exports = (env) ->
   ieee754 = require "ieee754"
   events = require "events"
 
-  class SensorTagPlugin extends env.plugins.Plugin
+  class BlueBeanPlugin extends env.plugins.Plugin
     init: (app, @framework, @config) =>
       deviceConfigDef = require("./device-config-schema")
       @devices = []
