@@ -3,7 +3,7 @@ module.exports = (env) ->
   convict = env.require "convict"
   assert = env.require 'cassert'
   
-  BlueBean = require "ble-bean"
+  Bean = require "ble-bean"
   ieee754 = require "ieee754"
   events = require "events"
 
@@ -86,18 +86,22 @@ module.exports = (env) ->
         plugin.removeFromScan peripheral.uuid
         blueBean.discoverServicesAndCharacteristics =>
           env.logger.debug "configuring device #{@name}"
-          blueBean.notifyOne, (data) =>
-            var value = data[1]<<8 || (data[0])
+          blueBean.notifyOne((data) =>
+            value = data[1]<<8 || (data[0])
             @emit "temperature", Number value
-          blueBean.notifyTwo, (data) =>
-            var value = data[1]<<8 || (data[0])
+          )
+          blueBean.notifyTwo((data) =>
+            value = data[1]<<8 || (data[0])
             @emit "battery", Number (value/1000).toFixed(3)
-          blueBean.notifyThree, (data) =>
-            var value = ieee754.read(data, 0, true, 23, 4)
+          )
+          blueBean.notifyThree((data) =>
+            value = ieee754.read(data, 0, true, 23, 4)
             @emit "current", Number value.toFixed(1)
-          blueBean.notifyFour, (data) =>
-            var value = ieee754.read(data, 0, true, 23, 4)
+          )
+          blueBean.notifyFour((data) =>
+            value = ieee754.read(data, 0, true, 23, 4)
             @emit "power", Number value.toFixed(1)
+          )
 
     getTemperature: -> Promise.resolve @temperature
     getBattery: -> Promise.resolve @battery
