@@ -56,9 +56,16 @@ module.exports = (env) ->
         description: "The apparent power"
         type: "number"
         unit: 'W'
+      consumption:
+        description: "Consumption over last hour"
+        type: "number"
+        unit: "Wh"
 
+    temperature: 0.0
+    battery: 0.0
     current: 0.0
     power: 0.0
+    consumption: 0.0
 
     constructor: (@config) ->
       @id = config.id
@@ -101,12 +108,17 @@ module.exports = (env) ->
           blueBean.notifyFour((data) =>
             value = ieee754.read(data, 0, true, 23, 4)
             @emit "power", Number value.toFixed(1)
+          ) 
+          blueBean.notifyFive((data) =>
+            value = ieee754.read(data, 0, true, 23, 4)
+            @emit "consumption", Number value.toFixed(1)
           )
 
     getTemperature: -> Promise.resolve @temperature
     getBattery: -> Promise.resolve @battery
     getCurrent: -> Promise.resolve @current
     getPower: -> Promise.resolve @power
+    getConsumption: -> Promise.resolve @consumption
 
   plugin = new BlueBeanPlugin
   return plugin
