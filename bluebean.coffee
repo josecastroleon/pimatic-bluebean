@@ -1,6 +1,5 @@
 module.exports = (env) ->
   Promise = env.require 'bluebird'
-  convict = env.require "convict"
   assert = env.require 'cassert'
   
   Bean = require "ble-bean"
@@ -68,9 +67,9 @@ module.exports = (env) ->
     consumption: 0.0
 
     constructor: (@config) ->
-      @id = config.id
-      @name = config.name
-      @uuid = config.uuid
+      @id = @config.id
+      @name = @config.name
+      @uuid = @config.uuid
       @peripheral = null
       @connected = false
       super()
